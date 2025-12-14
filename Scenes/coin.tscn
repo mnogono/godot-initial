@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bmhcgf56vtjq1"]
 
-[ext_resource type="Texture2D" uid="uid://j08bdh0hufoy" path="res://Sprites/Coin.png" id="1_d5gmh"]
+[ext_resource type="Texture2D" uid="uid://j08bdh0hufoy" path="res://Assets/Sprites/Coin.png" id="1_d5gmh"]
 
 [node name="Coin" type="Sprite2D"]
 modulate = Color(0.9882353, 0.33333334, 0.3764706, 1)

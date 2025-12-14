@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceftpebj5ictd"]
+
+[ext_resource type="Material" uid="uid://ddjlvmsxqv4jh" path="res://Materials/red_metall.tres" id="1_g22v7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mac0m"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5o3kl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g22v7"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Snowman" type="Node3D" parent="."]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.08008629, 0, 0)
+
+[node name="Arm" type="MeshInstance3D" parent="Snowman"]
+transform = Transform3D(2.1758769, 0, 0, 0, 0.12582368, 0, 0, 0, 0.2038691, 0.006553769, 1.4180213, 0)
+material_override = ExtResource("1_g22v7")
+mesh = SubResource("BoxMesh_mac0m")
+
+[node name="Legs" type="MeshInstance3D" parent="Snowman"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+material_override = ExtResource("1_g22v7")
+mesh = SubResource("SphereMesh_5o3kl")
+
+[node name="Torso" type="MeshInstance3D" parent="Snowman"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.2571115, 0)
+material_override = ExtResource("1_g22v7")
+mesh = SubResource("SphereMesh_5o3kl")
+
+[node name="Head" type="MeshInstance3D" parent="Snowman"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0807178, 0)
+material_override = ExtResource("1_g22v7")
+mesh = SubResource("SphereMesh_5o3kl")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(10.695853, 0, 0, 0, 1, 0, 0, 0, 15.668882, 0, -0.9648509, 0)
+mesh = SubResource("BoxMesh_g22v7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9111014, 0.41218233, 0, -0.41218233, 0.9111014, 2.2595534, 0.62225413, -3.8010623)
+light_color = Color(0.93, 0.111600004, 0.111600004, 1)
+light_energy = 3.961
+light_indirect_energy = 1.252
+light_size = 0.36
+shadow_enabled = true
+omni_range = 7.8811126
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9111014, 0.41218233, 0, -0.41218233, 0.9111014, 0, 1.1941283, 2.6018696)
+visible = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.89954257, 0, 0.43683314, 0, 1, 0, -0.43683314, 0, -0.89954257, 2.5637364, 1.7759337, -4.5860524)
+fov = 66.215195
