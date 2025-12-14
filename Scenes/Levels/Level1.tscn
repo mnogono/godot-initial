@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://lnopqsliqxvl"]
+[gd_scene load_steps=6 format=4 uid="uid://lnopqsliqxvl"]
 
 [ext_resource type="Texture2D" uid="uid://dv7nd3ixncdhv" path="res://Assets/Sprites/tiles_1.png" id="1_5jgm0"]
 [ext_resource type="PackedScene" uid="uid://dulhtfuferumx" path="res://Scenes/Player/player.tscn" id="2_36ke7"]
+[ext_resource type="PackedScene" uid="uid://dsklptbtjphyv" path="res://Scenes/Door/door.tscn" id="3_riv1q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_36ke7"]
 texture = ExtResource("1_5jgm0")
@@ -111,3 +112,6 @@ tile_map_data = PackedByteArray("AAD6/wAAAAABAAAAAAD7/wAAAAABAAAAAAD8/wAAAAABAAA
 tile_set = SubResource("TileSet_riv1q")
 
 [node name="Player" parent="." instance=ExtResource("2_36ke7")]
+
+[node name="Area2D" parent="." instance=ExtResource("3_riv1q")]
+position = Vector2(26, -16)
