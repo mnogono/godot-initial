@@ -16,7 +16,6 @@ func interact(body: Node2D) -> void:
 size = Vector2(8, 31)
 
 [node name="Door" type="Node2D"]
-z_index = -10
 script = ExtResource("1_rl688")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

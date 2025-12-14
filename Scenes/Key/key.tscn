@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc4w8x52mpjsq"]
+
+[ext_resource type="Script" uid="uid://dk1neenekgnqb" path="res://Scenes/Key/key.gd" id="1_dwpcb"]
+[ext_resource type="Texture2D" uid="uid://ci3exmwb6c4k4" path="res://Assets/TileSet/Dangeon/Dungeon Tile Set.png" id="1_q37b3"]
+
+[sub_resource type="GDScript" id="GDScript_dwpcb"]
+script/source = "extends StaticBody2D
+
+@onready var key : Key = $\"..\"
+
+func interact(body: Node2D) -> void:
+	key.pickup(body)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwpcb"]
+size = Vector2(14, 4)
+
+[node name="Key" type="Node2D"]
+script = ExtResource("1_dwpcb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q37b3")
+region_enabled = true
+region_rect = Rect2(177, 152, 13, 4)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
+script = SubResource("GDScript_dwpcb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_dwpcb")
