@@ -51,11 +51,21 @@ func _input(event: InputEvent) -> void:
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
 	print("_on_interaction_area_body_entered: " + str(body))
-	nearbly_interactive.append(body)
+	if body is TileMapLayer:
+		var stairs := body as TileMapLayer
+		stairs.collision_enabled = false
+	else:
+		nearbly_interactive.append(body)
+	
 
 
 func _on_interaction_area_body_exited(body: Node2D) -> void:
-	nearbly_interactive.erase(body)
+	print("_on_interaction_area_body_exited: " + str(body))
+	if body is TileMapLayer:
+		var stairs := body as TileMapLayer
+		stairs.collision_enabled = true
+	else:
+		nearbly_interactive.erase(body)
 
 func pickup_key(id: int) -> void:
 	keys.append(id)
