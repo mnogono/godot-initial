@@ -42,6 +42,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		print("nearble_interactive size: " + str(nearbly_interactive.size()))
 	if event.is_action_pressed("interact") and nearbly_interactive.is_empty() == false:
 		print("interact with...")
 		for it in nearbly_interactive:
@@ -50,22 +52,24 @@ func _input(event: InputEvent) -> void:
 				it.interact(self)
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
-	print("_on_interaction_area_body_entered: " + str(body))
-	if body is TileMapLayer:
-		var stairs := body as TileMapLayer
-		stairs.collision_enabled = false
-	else:
+	if body.is_in_group("interactive"):
 		nearbly_interactive.append(body)
+	print("_on_interaction_area_body_entered: " + str(body))
+	#if body is TileMapLayer:
+		#if velocity.y != 0:
+			#var stairs := body as TileMapLayer
+			#stairs.collision_enabled = true
 	
 
 
 func _on_interaction_area_body_exited(body: Node2D) -> void:
-	print("_on_interaction_area_body_exited: " + str(body))
-	if body is TileMapLayer:
-		var stairs := body as TileMapLayer
-		stairs.collision_enabled = true
-	else:
+	if body.is_in_group("interactive"):
 		nearbly_interactive.erase(body)
+	#print("_on_interaction_area_body_exited: " + str(body))
+	#if body is TileMapLayer:
+		#var stairs := body as TileMapLayer
+		#stairs.collision_enabled = false
+	
 
 func pickup_key(id: int) -> void:
 	keys.append(id)

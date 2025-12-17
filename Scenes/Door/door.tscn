@@ -8,6 +8,9 @@ script/source = "extends StaticBody2D
 
 @onready var door: Door = $\"..\"
 
+func _ready() -> void:
+	add_to_group(\"interactive\")
+
 func interact(body: Node2D) -> void:
 	door.interact(body)
 "

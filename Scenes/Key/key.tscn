@@ -8,6 +8,9 @@ script/source = "extends StaticBody2D
 
 @onready var key : Key = $\"..\"
 
+func _ready() -> void:
+	add_to_group(\"interactive\")
+
 func interact(body: Node2D) -> void:
 	key.pickup(body)
 "
