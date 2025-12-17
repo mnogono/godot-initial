@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 @export var speed: float = 100
 @export var jump: float = 250 
 
@@ -7,7 +8,8 @@ extends CharacterBody2D
 
 #const SPEED = 200.0
 #const JUMP_VELOCITY = -200.0
-
+var nearbly_interactive: Array[Node2D] = []
+var keys: Array[int] = []
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -38,3 +40,41 @@ func _physics_process(delta: float) -> void:
 		anim.play("idle")
 
 	move_and_slide()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") and nearbly_interactive.is_empty() == false:
+		print("interact with...")
+		for it in nearbly_interactive:
+			print("object: " + str(it))
+			if it.has_method("interact"):
+				it.interact(self)
+
+func _on_interaction_area_body_entered(body: Node2D) -> void:
+	print("_on_interaction_area_body_entered: " + str(body))
+	nearbly_interactive.append(body)
+
+
+func _on_interaction_area_body_exited(body: Node2D) -> void:
+	nearbly_interactive.erase(body)
+
+func pickup_key(id: int) -> void:
+	keys.append(id)
+	
+func has_key(id: int) -> bool:
+	return keys.has(id)
+
+
+func _on_interaction_area_area_entered(area: Area2D) -> void:
+	if Input.is_action_pressed("ui_up"):
+		if area.has_method("stair"):
+			area.stair(true)
+		print("up!")
+	print("_on_interaction_area_area_entered: " + str(area))
+
+
+#func _on_interaction_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	#print("ASDASD")
+#
+#
+#func _on_interaction_area_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	#print("BBBBASD")
