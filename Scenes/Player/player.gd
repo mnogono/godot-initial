@@ -3,13 +3,17 @@ extends CharacterBody2D
 
 @export var speed: float = 100
 @export var jump: float = 250 
+@export var climb: float = 50
 
 @onready var anim = $AnimatedSprite2D
+@onready var no_key : Sprite2D = $NoKey
 
 #const SPEED = 200.0
 #const JUMP_VELOCITY = -200.0
 var nearbly_interactive: Array[Node2D] = []
+var nearbly_item: Array[Node2D] = []
 var keys: Array[int] = []
+var is_ladder: bool = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -38,6 +42,11 @@ func _physics_process(delta: float) -> void:
 
 	if velocity.x == 0 && velocity.y == 0:
 		anim.play("idle")
+		
+	if is_ladder == true:
+		#print("climbing...")
+		var _direction = Input.get_axis("ui_up", "ui_down")
+		velocity.y = _direction * climb
 
 	move_and_slide()
 
@@ -47,13 +56,21 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and nearbly_interactive.is_empty() == false:
 		print("interact with...")
 		for it in nearbly_interactive:
-			print("object: " + str(it))
+			#print("object: " + str(it))
 			if it.has_method("interact"):
 				it.interact(self)
+			if it.has_method("try_unlock"):
+				if it.try_unlock(self) == false:
+					no_key.visible = true
+					await get_tree().create_timer(1.0).timeout
+					no_key.visible = false
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("interactive"):
 		nearbly_interactive.append(body)
+	if body.is_in_group("ladder"):
+		is_ladder = true
+		#print("player overlap ladder enter")
 	print("_on_interaction_area_body_entered: " + str(body))
 	#if body is TileMapLayer:
 		#if velocity.y != 0:
@@ -65,6 +82,9 @@ func _on_interaction_area_body_entered(body: Node2D) -> void:
 func _on_interaction_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("interactive"):
 		nearbly_interactive.erase(body)
+	if body.is_in_group("ladder"):
+		is_ladder = false
+		#print("player move out from ladder")
 	#print("_on_interaction_area_body_exited: " + str(body))
 	#if body is TileMapLayer:
 		#var stairs := body as TileMapLayer

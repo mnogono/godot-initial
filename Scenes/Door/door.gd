@@ -45,6 +45,11 @@ func toggle() -> void:
 	else:
 		open()
 		
+func try_unlock(body: Node2D) -> bool:
+	if body.has_method("has_key"):
+		return body.has_key(id)
+	return false
+		
 func interact(body: Node2D) -> void:
 	if body.has_method("has_key"):
 		if body.has_key(id):

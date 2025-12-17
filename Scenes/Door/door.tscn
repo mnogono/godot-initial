@@ -13,10 +13,14 @@ func _ready() -> void:
 
 func interact(body: Node2D) -> void:
 	door.interact(body)
+	
+	
+func try_unlock(body: Node2D) -> bool:
+	return door.try_unlock(body)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwb6t"]
-size = Vector2(8, 31)
+size = Vector2(8, 53)
 
 [node name="Door" type="Node2D"]
 z_index = -10
@@ -32,5 +36,5 @@ collision_layer = 3
 script = SubResource("GDScript_rl688")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-4, 0.5)
+position = Vector2(-4, -10.5)
 shape = SubResource("RectangleShape2D_vwb6t")
