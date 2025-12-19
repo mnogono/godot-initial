@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="godot-initial"
-run/main_scene="uid://lnopqsliqxvl"
+run/main_scene="uid://bihxqb2uvmo5l"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Game="*res://Scripts/game.gd"
 
 [input]
 

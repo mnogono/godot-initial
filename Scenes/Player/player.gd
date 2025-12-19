@@ -15,6 +15,9 @@ var nearbly_item: Array[Node2D] = []
 var keys: Array[int] = []
 var is_ladder: bool = false
 
+func _ready() -> void:
+	add_to_group("player")
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
