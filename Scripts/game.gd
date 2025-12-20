@@ -1,10 +1,13 @@
 extends Node
 
-var level: int = 1
+var level: int
 var levels: Array[String] = [
 	"res://Scenes/Levels/level_1.tscn",
 	"res://Scenes/Levels/level_2.tscn",
 ]
+
+func _ready() -> void:
+	level = 0
 
 func restart_level() -> void:
 	var tree := get_tree()
@@ -15,5 +18,5 @@ func restart_level() -> void:
 	tree.change_scene_to_file(path)
 
 func next_level() -> void:
-	level = (level + 1) % levels.size()
+	level = (level + 1) % (levels.size())
 	get_tree().change_scene_to_file(levels[level])

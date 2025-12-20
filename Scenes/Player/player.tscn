@@ -126,6 +126,7 @@ height = 12.0
 size = Vector2(14, 10)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 56
 script = ExtResource("1_a3d8c")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -146,7 +147,7 @@ shape = SubResource("CapsuleShape2D_tugb3")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 position = Vector2(0, -5)
