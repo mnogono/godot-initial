@@ -24,7 +24,7 @@ position = Vector2(390, -4)
 id = 1
 
 [node name="Key2" parent="Keys" instance=ExtResource("2_5f3p6")]
-position = Vector2(-182, -133)
+position = Vector2(272, -4)
 id = 2
 
 [node name="Key3" parent="Keys" instance=ExtResource("2_5f3p6")]

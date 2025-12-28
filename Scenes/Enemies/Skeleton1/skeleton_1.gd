@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var anim = $AnimatedSprite2D
 # view area collision, player intersect this activate walk to player
 @onready var view_collision = $ViewArea/CollisionShape2D
-
+# TODO убрать AttackArea - вычислять по разнице расстояния
 @export var speed = 15
 @export var speed_chase = 25
 
@@ -114,7 +114,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if anim.animation == "attack":
 		is_attacking = false
 		state_update()
-		print("animation finished: " + anim.animation)
 
 
 func _on_animated_sprite_2d_animation_changed() -> void:

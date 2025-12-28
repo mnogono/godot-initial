@@ -5,6 +5,13 @@ var levels: Array[String] = [
 	"res://Scenes/Levels/level_1.tscn",
 	"res://Scenes/Levels/level_2.tscn",
 ]
+const collision_layers := {
+	"player": 1,
+	"interactive": 2,
+	"enemies": 3,
+	"ground": 4,
+	"door": 5
+}
 
 func _ready() -> void:
 	level = 0
