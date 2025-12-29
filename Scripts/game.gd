@@ -4,6 +4,7 @@ var level: int
 var levels: Array[String] = [
 	"res://Scenes/Levels/level_1.tscn",
 	"res://Scenes/Levels/level_2.tscn",
+	"res://Scenes/Levels/level_3.tscn",
 ]
 const collision_layers := {
 	"player": 1,

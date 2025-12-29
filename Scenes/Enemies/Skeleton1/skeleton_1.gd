@@ -122,3 +122,12 @@ func _on_animated_sprite_2d_animation_changed() -> void:
 	if anim.animation == "attack":
 		is_attacking = true
 		state_update()
+
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	if not anim: return
+	if anim.animation == "attack":
+		if anim.frame == 6:
+			print("hit box activated")
+		elif anim.frame == 9:
+			print("hit box deactivated")
