@@ -4,11 +4,12 @@ extends CharacterBody2D
 # view area collision, player intersect this activate walk to player
 @onready var view_collision = $ViewArea/CollisionShape2D
 @onready var hit_box := $HitBox
-@onready var change_view_timer : = $Timer
+# @onready var change_view_timer : = $Timer
 # TODO убрать AttackArea - вычислять по разнице расстояния
 @export var speed = 15
 @export var speed_chase = 25
 
+var change_view_timer: Timer
 var move_direction: float
 var view_direction: int
 var player_in_vision: bool
@@ -18,6 +19,12 @@ var state: State
 enum State {Idle, Walk, Attack, Chase}
 
 func _ready() -> void:
+	change_view_timer = Timer.new()
+	change_view_timer.wait_time = randi_range(3, 6)
+	change_view_timer.timeout.connect(_on_change_view_timer_timeout)
+	change_view_timer.autostart = true
+	add_child(change_view_timer)
+	
 	state = State.Idle
 	move_direction = 0
 	view_direction = 1
@@ -25,8 +32,11 @@ func _ready() -> void:
 	player_in_vision = false
 	player_in_attack_range = false
 	is_attacking = false
-	seed(9)
-	change_view_timer.wait_time = randi_range(3, 6)
+	
+	randomize()
+	anim.play("idle")
+	var frames = anim.sprite_frames.get_frame_count("idle")
+	anim.frame = randi() % frames
 	#anim.animation_finished.connect(_on_attack_animation_finished)
 
 func _play_animation(animation: String) -> void:
@@ -98,7 +108,7 @@ func _on_view_body_exited(body: Node2D) -> void:
 		state_update()
 
 
-func _on_timer_timeout() -> void:
+func _on_change_view_timer_timeout() -> void:
 	if player_in_vision == false:
 		view_direction = -1 * view_direction
 		update_view_collision_position()

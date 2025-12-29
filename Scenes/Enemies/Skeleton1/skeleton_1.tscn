@@ -361,10 +361,6 @@ collision_layer = 0
 position = Vector2(50, 8)
 shape = SubResource("RectangleShape2D_i0gc5")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
 [node name="HitBox" parent="." instance=ExtResource("5_4w1i7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
@@ -386,4 +382,3 @@ shape = SubResource("RectangleShape2D_un6sd")
 [connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
 [connection signal="body_entered" from="ViewArea" to="." method="_on_view_body_entered"]
 [connection signal="body_exited" from="ViewArea" to="." method="_on_view_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
