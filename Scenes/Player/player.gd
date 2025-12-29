@@ -115,3 +115,10 @@ func _on_interaction_area_area_entered(area: Area2D) -> void:
 #
 #func _on_interaction_area_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	#print("BBBBASD")
+
+
+func _on_hurt_box_hurted() -> void:
+	print("Autch!")
+
+func _on_hurt_box_died() -> void:
+	Game.restart_level()

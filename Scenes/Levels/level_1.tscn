@@ -25,7 +25,7 @@ position = Vector2(390, -4)
 id = 1
 
 [node name="Key2" parent="Keys" instance=ExtResource("2_5f3p6")]
-position = Vector2(272, -4)
+position = Vector2(-180, -5)
 id = 2
 
 [node name="Key3" parent="Keys" instance=ExtResource("2_5f3p6")]
@@ -59,11 +59,19 @@ tile_map_data = PackedByteArray("AAD5/wAAAAACAAEAAAD6/wAAAAACAAEAAAD7/wAAAAACAAE
 [node name="TileMapLayerLadders" parent="." instance=ExtResource("6_hwvp3")]
 tile_map_data = PackedByteArray("AAACAP//AAAFAAkAAAACAP7/AAAFAAkAAAACAP3/AAAFAAkAAAACAPz/AAAFAAkAAAACAPv/AAAFAAkAAAACAPr/AAAFAAkAAAACAPn/AAAFAAkAAAACAPj/AAAFAAkAAAACAPf/AAAFAAkAAAACAPb/AAAFAAkAAAACAPX/AAAFAAkAAAACAPT/AAAFAAkAAAACAPP/AAAFAAgAAAAYAPP/AAAFAAsAAAAYAPL/AAAFAAkAAAAYAPH/AAAFAAkAAAAYAPD/AAAFAAkAAAAYAO//AAAFAAkAAAAYAO7/AAAFAAgAAAA=")
 
-[node name="Skeleton1" parent="." instance=ExtResource("9_u5ghp")]
-position = Vector2(-168, -16)
-
 [node name="Player" parent="." instance=ExtResource("4_rb0md")]
 position = Vector2(88, -2)
 
 [node name="RestartArea" parent="." instance=ExtResource("11_hwvp3")]
 position = Vector2(104, 207.99998)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Skeleton1" parent="Enemies" instance=ExtResource("9_u5ghp")]
+position = Vector2(-152, -24)
+
+[node name="Skeleton2" parent="Enemies" instance=ExtResource("9_u5ghp")]
+position = Vector2(-7, -151)
+
+[node name="Skeleton3" parent="Enemies" instance=ExtResource("9_u5ghp")]
+position = Vector2(347, -23)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://42t4a2whpa6b"]
+[gd_scene load_steps=53 format=3 uid="uid://42t4a2whpa6b"]
 
 [ext_resource type="Script" uid="uid://cquptkk57sux4" path="res://Scenes/Enemies/Skeleton1/skeleton_1.gd" id="1_i0gc5"]
 [ext_resource type="Texture2D" uid="uid://dalp4o1wb04qv" path="res://Assets/Sprites/Enemies/Skeleton1/Skeleton Idle.png" id="1_orbpe"]
@@ -233,7 +233,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -326,22 +326,22 @@ height = 26.0
 size = Vector2(25, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0gc5"]
-size = Vector2(100, 52)
+size = Vector2(100, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4w1i7"]
-size = Vector2(12, 11)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_un6sd"]
-size = Vector2(13, 29)
+size = Vector2(15, 28)
 
 [node name="Skeleton1" type="CharacterBody2D"]
-collision_layer = 0
-collision_mask = 24
+collision_layer = 4
+collision_mask = 25
 script = ExtResource("1_i0gc5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vvknj")
-animation = &"idle"
+animation = &"attack"
+autoplay = "idle"
+frame = 8
+frame_progress = 0.7916734
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
@@ -358,7 +358,7 @@ shape = SubResource("RectangleShape2D_qf7vj")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ViewArea"]
-position = Vector2(50, 8)
+position = Vector2(50, 0)
 shape = SubResource("RectangleShape2D_i0gc5")
 
 [node name="Timer" type="Timer" parent="."]
@@ -368,16 +368,9 @@ autostart = true
 [node name="HitBox" parent="." instance=ExtResource("5_4w1i7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(12, 12.5)
+position = Vector2(13.5, 4)
 shape = SubResource("RectangleShape2D_4w1i7")
 debug_color = Color(0.7, 0, 0.011666489, 0.41960785)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-4.5, 4.5)
-shape = SubResource("RectangleShape2D_un6sd")
 
 [connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

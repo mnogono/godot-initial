@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var anim = $AnimatedSprite2D
 # view area collision, player intersect this activate walk to player
 @onready var view_collision = $ViewArea/CollisionShape2D
+@onready var hit_box := $HitBox
+@onready var change_view_timer : = $Timer
 # TODO убрать AttackArea - вычислять по разнице расстояния
 @export var speed = 15
 @export var speed_chase = 25
@@ -23,6 +25,8 @@ func _ready() -> void:
 	player_in_vision = false
 	player_in_attack_range = false
 	is_attacking = false
+	seed(9)
+	change_view_timer.wait_time = randi_range(3, 6)
 	#anim.animation_finished.connect(_on_attack_animation_finished)
 
 func _play_animation(animation: String) -> void:
@@ -37,7 +41,9 @@ func state_animation() -> void:
 		State.Chase: _play_animation("walk")
 		State.Attack: _play_animation("attack")
 		
-func state_physics_process() -> void:
+func state_physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta	
 	match state:
 		State.Walk:
 			velocity.x = move_direction * speed
@@ -69,7 +75,7 @@ func update_view_collision_position() -> void:
 		view_collision.position.x = -view_collision.shape.size.x / 2
 
 func _physics_process(delta: float) -> void:
-	state_physics_process()
+	state_physics_process(delta)
 	state_animation()
 	move_and_slide()
 
@@ -127,7 +133,7 @@ func _on_animated_sprite_2d_animation_changed() -> void:
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if not anim: return
 	if anim.animation == "attack":
-		if anim.frame == 6:
-			print("hit box activated")
-		elif anim.frame == 9:
-			print("hit box deactivated")
+		if anim.frame == 7:
+			hit_box.set_active(true)
+		elif anim.frame == 8:
+			hit_box.set_active(false)

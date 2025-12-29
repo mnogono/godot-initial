@@ -1,8 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://dulhtfuferumx"]
+[gd_scene load_steps=22 format=3 uid="uid://dulhtfuferumx"]
 
 [ext_resource type="Script" uid="uid://c6mvbi6cmo5rw" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://dn1yths2ywndn" path="res://Assets/Sprites/Player.png" id="1_uvnfx"]
 [ext_resource type="Texture2D" uid="uid://ci3exmwb6c4k4" path="res://Assets/TileSet/Dangeon/Dungeon Tile Set.png" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://bckff63apuh7h" path="res://Scenes/Game/hurt_box.tscn" id="4_mtuoh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
+size = Vector2(14, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_06tpx"]
 atlas = ExtResource("1_uvnfx")
@@ -126,8 +130,17 @@ height = 12.0
 size = Vector2(14, 10)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 56
+collision_mask = 60
 script = ExtResource("1_a3d8c")
+
+[node name="HurtBox" parent="." instance=ExtResource("4_mtuoh")]
+position = Vector2(0, -7)
+hp = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_mtuoh")
+debug_color = Color(0, 0.65, 0.09749991, 0.5803922)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
@@ -161,6 +174,8 @@ texture = ExtResource("3_xpcdj")
 region_enabled = true
 region_rect = Rect2(177, 152, 13, 4)
 
+[connection signal="died" from="HurtBox" to="." method="_on_hurt_box_died"]
+[connection signal="hurted" from="HurtBox" to="." method="_on_hurt_box_hurted"]
 [connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
 [connection signal="area_shape_entered" from="InteractionArea" to="." method="_on_interaction_area_area_shape_entered"]
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]

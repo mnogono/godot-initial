@@ -35,6 +35,8 @@ interact={
 2d_physics/layer_4="ground"
 2d_physics/layer_5="door"
 2d_physics/layer_6="stairs"
+2d_physics/layer_7="hit_box"
+2d_physics/layer_8="hurt_box"
 
 [rendering]
 
