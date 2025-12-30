@@ -8,6 +8,7 @@ signal died()
 
 func get_damage(val: int) -> void:
 	hp -= val
-	hurted.emit()
 	if hp <= 0:
 		died.emit()
+	else:
+		hurted.emit()
