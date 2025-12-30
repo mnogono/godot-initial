@@ -7,50 +7,100 @@ class_name Player
 
 @onready var anim = $AnimatedSprite2D
 @onready var no_key : Sprite2D = $NoKey
+@onready var hurt_box: HurtBox = $HurtBox
 
-#const SPEED = 200.0
-#const JUMP_VELOCITY = -200.0
 var nearbly_interactive: Array[Node2D] = []
 var nearbly_item: Array[Node2D] = []
 var keys: Array[int] = []
 var is_ladder: bool = false
+var view_direction: int = 0
+var state: State = State.Idle
+enum State {Idle, Walk, Jump, Fall, Died, Climb}
 
 func _ready() -> void:
 	add_to_group("player")
+	
+func _play_animation(animation: String) -> void:
+	if anim.animation == animation:
+		return
+	anim.play(animation)
+	
+func state_animation() -> void:
+	match state:
+		State.Idle: _play_animation("idle")
+		State.Walk: _play_animation("walk")
+		State.Jump: _play_animation("jump")
+		State.Fall: _play_animation("fall")
+		State.Died: _play_animation("died")
+		State.Climb: _play_animation("climb")
+
+func state_transition() -> void:
+	if state == State.Died:
+		# died can't be transition to other state
+		return
+	if hurt_box.hp == 0:
+		state = State.Died
+		return
+	if velocity.y != 0:
+		if is_ladder:
+			state = State.Climb
+		elif velocity.y < 0:
+			state = State.Jump
+		else:
+			state = State.Fall
+		return
+	if velocity.x:
+		state = State.Walk
+		return
+	state = State.Idle
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	state_transition()
+	state_animation()
+	if state == State.Died:
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	elif Input.is_action_just_pressed("jump"):
+		velocity.y = -1 * jump
+	var move_x_direction = Input.get_axis("move_left", "move_right")
+	if move_x_direction:
+		velocity.x = move_x_direction * speed
+		view_direction = move_x_direction
+	else:
+		velocity.x = 0
+	anim.flip_h = view_direction == -1
+	if is_ladder:
+		var move_y_direction = Input.get_axis("move_up", "move_down")
+		velocity.y = move_y_direction * climb
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = -1 * jump
+	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		#velocity.y = -1 * jump
 
-	if velocity.y != 0:
-		if velocity.y < 0:
-			anim.play("jump")
-		else:
-			anim.play("fall")	
+	#if velocity.y != 0:
+		#if velocity.y < 0:
+			#anim.play("jump")
+		#else:
+			#anim.play("fall")
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * speed
-		anim.flip_h = direction == -1 
-		anim.play("move")
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+	#var direction := Input.get_axis("ui_left", "ui_right")
+	#if direction:
+		#velocity.x = direction * speed
+		#anim.flip_h = direction == -1 
+		#anim.play("move")
+	#else:
+		#velocity.x = move_toward(velocity.x, 0, speed)
 
-	if velocity.x == 0 && velocity.y == 0:
-		anim.play("idle")
+	#if velocity.x == 0 && velocity.y == 0:
+		#anim.play("idle")
 		
-	if is_ladder == true:
+	#if is_ladder == true:
 		#print("climbing...")
-		var _direction = Input.get_axis("ui_up", "ui_down")
-		velocity.y = _direction * climb
-
+		#var _direction = Input.get_axis("ui_up", "ui_down")
+		#velocity.y = _direction * climb
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
@@ -100,7 +150,6 @@ func pickup_key(id: int) -> void:
 func has_key(id: int) -> bool:
 	return keys.has(id)
 
-
 func _on_interaction_area_area_entered(area: Area2D) -> void:
 	if Input.is_action_pressed("ui_up"):
 		if area.has_method("stair"):
@@ -108,17 +157,10 @@ func _on_interaction_area_area_entered(area: Area2D) -> void:
 		print("up!")
 	print("_on_interaction_area_area_entered: " + str(area))
 
-
-#func _on_interaction_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	#print("ASDASD")
-#
-#
-#func _on_interaction_area_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	#print("BBBBASD")
-
-
 func _on_hurt_box_hurted() -> void:
 	print("Autch!")
 
 func _on_hurt_box_died() -> void:
+	anim.play("died")
+	await anim.animation_finished
 	Game.restart_level()
