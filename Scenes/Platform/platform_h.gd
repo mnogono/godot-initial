@@ -13,10 +13,5 @@ func _ready():
 		animation.speed_scale = speed_scale
 		set_process(false)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	path.progress += speed * delta
-	#var path := get_parent() as PathFollow2D
-	#path.set_progress(path.get_progress() + speed * delta)
-	#path.get_
-	#move_and_collide()
