@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 Game="*res://Scripts/game.gd"
 
+[global_group]
+
+interactive=""
+key=""
+
 [input]
 
 interact={

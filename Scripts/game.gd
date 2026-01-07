@@ -17,14 +17,20 @@ const collision_layers := {
 func _ready() -> void:
 	level = 0
 
+func start_level(_level: int) -> void:
+	level = (_level) % (levels.size())
+	var path = levels[level]
+	get_tree().change_scene_to_file(path)
+
 func restart_level() -> void:
 	var tree := get_tree()
-	var path := tree.current_scene.scene_file_path
+	var path := levels[level] #tree.current_scene.scene_file_path
 	if path.is_empty():
 		push_warning("Current scene has no scene_file_path; can't restart.")
 		return
 	tree.change_scene_to_file(path)
 
 func next_level() -> void:
-	level = (level + 1) % (levels.size())
-	get_tree().change_scene_to_file(levels[level])
+	start_level(level + 1)
+	#level = (level + 1) % (levels.size())
+	#get_tree().change_scene_to_file(levels[level])

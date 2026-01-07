@@ -329,7 +329,7 @@ size = Vector2(25, 28)
 size = Vector2(100, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4w1i7"]
-size = Vector2(31, 26)
+size = Vector2(12, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_un6sd"]
 size = Vector2(13, 29)
@@ -341,7 +341,7 @@ script = ExtResource("1_i0gc5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vvknj")
-animation = &"attack"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
@@ -351,9 +351,8 @@ shape = SubResource("CapsuleShape2D_orbpe")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(8.5, 4)
+position = Vector2(-8.5, 4)
 shape = SubResource("RectangleShape2D_qf7vj")
-debug_color = Color(0.9764706, 0.13333334, 0.8235294, 0.64705884)
 
 [node name="ViewArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -363,10 +362,9 @@ position = Vector2(50, 8)
 shape = SubResource("RectangleShape2D_i0gc5")
 
 [node name="HitBox" parent="." instance=ExtResource("5_4w1i7")]
-collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(8.5, 5)
+position = Vector2(12, 12.5)
 shape = SubResource("RectangleShape2D_4w1i7")
 debug_color = Color(0.7, 0, 0.011666489, 0.41960785)
 

@@ -9,7 +9,8 @@ script/source = "extends StaticBody2D
 @onready var key : Key = $\"..\"
 
 func _ready() -> void:
-	add_to_group(\"interactive\")
+	pass
+	#add_to_group(\"interactive\")
 
 func interact(body: Node2D) -> void:
 	key.pickup(body)
@@ -18,7 +19,7 @@ func interact(body: Node2D) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dwpcb"]
 size = Vector2(14, 4)
 
-[node name="Key" type="Node2D"]
+[node name="Key" type="Node2D" groups=["interactive", "key"]]
 script = ExtResource("1_dwpcb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -26,7 +27,7 @@ texture = ExtResource("1_q37b3")
 region_enabled = true
 region_rect = Rect2(177, 152, 13, 4)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["interactive"]]
 collision_layer = 2
 script = SubResource("GDScript_dwpcb")
 

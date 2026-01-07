@@ -8,11 +8,11 @@ class_name Door
 
 # unique door identifier, the same key identifier can unlock the door
 @export var id: int = 0
+# door is locked, can't be opened before unlock
+@export var is_lock = true
 
 # door is open/close. if true mean door is unlocked, false doork can be locked/unlocked 
 var is_open = false
-# door is locked, can't be opened before unlock
-var is_lock = true
 
 const sprite_rect_opened := Rect2i(208, 160, 16, 32)
 const sprite_rect_closed := Rect2i(192, 160, 16, 32)

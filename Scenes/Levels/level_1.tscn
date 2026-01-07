@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bihxqb2uvmo5l"]
+[gd_scene load_steps=13 format=4 uid="uid://bihxqb2uvmo5l"]
 
 [ext_resource type="Script" uid="uid://chahgbtpit1cd" path="res://Scenes/Levels/level_1.gd" id="1_xgxfi"]
 [ext_resource type="PackedScene" uid="uid://bc4w8x52mpjsq" path="res://Scenes/Key/key.tscn" id="2_5f3p6"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b0n1gdtlb4lfs" path="res://Scenes/Foreground/foreground.tscn" id="7_jv26f"]
 [ext_resource type="PackedScene" uid="uid://42t4a2whpa6b" path="res://Scenes/Enemies/Skeleton1/skeleton_1.tscn" id="9_u5ghp"]
 [ext_resource type="PackedScene" uid="uid://ctybikby6jotu" path="res://Scenes/Game/restart.tscn" id="11_hwvp3"]
+[ext_resource type="PackedScene" uid="uid://cpaftcm4dbnu2" path="res://Scenes/Items/level_switcher.tscn" id="12_afv7b"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_xgxfi")
@@ -43,6 +44,7 @@ id = 1
 [node name="Door2" parent="Doors" instance=ExtResource("3_jv26f")]
 position = Vector2(296, -16)
 id = 2
+is_lock = false
 
 [node name="Door3" parent="Doors" instance=ExtResource("3_jv26f")]
 position = Vector2(200, 97)
@@ -59,6 +61,19 @@ tile_map_data = PackedByteArray("AAD5/wAAAAACAAEAAAD6/wAAAAACAAEAAAD7/wAAAAACAAE
 [node name="TileMapLayerLadders" parent="." instance=ExtResource("6_hwvp3")]
 tile_map_data = PackedByteArray("AAACAP//AAAFAAkAAAACAP7/AAAFAAkAAAACAP3/AAAFAAkAAAACAPz/AAAFAAkAAAACAPv/AAAFAAkAAAACAPr/AAAFAAkAAAACAPn/AAAFAAkAAAACAPj/AAAFAAkAAAACAPf/AAAFAAkAAAACAPb/AAAFAAkAAAACAPX/AAAFAAkAAAACAPT/AAAFAAkAAAACAPP/AAAFAAgAAAAYAPP/AAAFAAsAAAAYAPL/AAAFAAkAAAAYAPH/AAAFAAkAAAAYAPD/AAAFAAkAAAAYAO//AAAFAAkAAAAYAO7/AAAFAAgAAAA=")
 
+[node name="LevelSwitcher" type="Node2D" parent="."]
+
+[node name="Level1" parent="LevelSwitcher" instance=ExtResource("12_afv7b")]
+position = Vector2(200, -72)
+
+[node name="Level2" parent="LevelSwitcher" instance=ExtResource("12_afv7b")]
+position = Vector2(224, -72)
+level = 1
+
+[node name="Level3" parent="LevelSwitcher" instance=ExtResource("12_afv7b")]
+position = Vector2(248, -72)
+level = 2
+
 [node name="Player" parent="." instance=ExtResource("4_rb0md")]
 position = Vector2(88, -2)
 
@@ -69,6 +84,7 @@ position = Vector2(104, 207.99998)
 
 [node name="Skeleton1" parent="Enemies" instance=ExtResource("9_u5ghp")]
 position = Vector2(-152, -24)
+view_direction = 1
 
 [node name="Skeleton2" parent="Enemies" instance=ExtResource("9_u5ghp")]
 position = Vector2(-7, -151)

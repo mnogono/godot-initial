@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	var move_x_direction = Input.get_axis("move_left", "move_right")
 	if move_x_direction:
 		velocity.x = move_x_direction * speed
-		view_direction = move_x_direction
+		view_direction = int(move_x_direction)
 	else:
 		velocity.x = 0
 	anim.flip_h = view_direction == -1
@@ -105,11 +105,11 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		print("nearble_interactive size: " + str(nearbly_interactive.size()))
+		#print("nearble_interactive size: " + str(nearbly_interactive.size()))
 	if event.is_action_pressed("interact") and nearbly_interactive.is_empty() == false:
-		print("interact with...")
+		#print("interact with...")
 		for it in nearbly_interactive:
-			#print("object: " + str(it))
+			#print("object check interact method: " + str(it))
 			if it.has_method("interact"):
 				it.interact(self)
 			if it.has_method("try_unlock"):
@@ -124,7 +124,7 @@ func _on_interaction_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("ladder"):
 		is_ladder = true
 		#print("player overlap ladder enter")
-	print("_on_interaction_area_body_entered: " + str(body))
+	#print("_on_interaction_area_body_entered: " + str(body))
 	#if body is TileMapLayer:
 		#if velocity.y != 0:
 			#var stairs := body as TileMapLayer
@@ -154,11 +154,10 @@ func _on_interaction_area_area_entered(area: Area2D) -> void:
 	if Input.is_action_pressed("ui_up"):
 		if area.has_method("stair"):
 			area.stair(true)
-		print("up!")
-	print("_on_interaction_area_area_entered: " + str(area))
+	#print("_on_interaction_area_area_entered: " + str(area))
 
-func _on_hurt_box_hurted() -> void:
-	print("Autch!")
+#func _on_hurt_box_hurted() -> void:
+	#print("Autch!")
 
 func _on_hurt_box_died() -> void:
 	anim.play("died")

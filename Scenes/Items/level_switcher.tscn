@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpaftcm4dbnu2"]
+
+[ext_resource type="Script" uid="uid://bmbstpubqkh40" path="res://Scenes/Items/level_switcher.gd" id="1_8ik5e"]
+[ext_resource type="Texture2D" uid="uid://ci3exmwb6c4k4" path="res://Assets/TileSet/Dangeon/Dungeon Tile Set.png" id="1_ixk6e"]
+
+[sub_resource type="GDScript" id="GDScript_ixk6e"]
+script/source = "extends StaticBody2D
+
+@onready var level_switcher = $\"..\"
+
+func interact(_body: Node2D) -> void:
+	Game.start_level(level_switcher.level)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixk6e"]
+size = Vector2(16, 16)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_8ik5e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ixk6e")
+region_enabled = true
+region_rect = Rect2(160, 192, 16, 16)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["interactive"]]
+collision_layer = 2
+script = SubResource("GDScript_ixk6e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_ixk6e")

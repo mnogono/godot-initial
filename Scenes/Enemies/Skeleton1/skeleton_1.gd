@@ -4,19 +4,21 @@ extends CharacterBody2D
 # view area collision, player intersect this activate walk to player
 @onready var view_collision = $ViewArea/CollisionShape2D
 @onready var hit_box := $HitBox
-# @onready var change_view_timer : = $Timer
-# TODO убрать AttackArea - вычислять по разнице расстояния
+@onready var hit_box_collision = $HitBox/CollisionShape2D
+@onready var attack_collision := $AttackArea/CollisionShape2D
 @export var speed = 15
 @export var speed_chase = 25
+@export var view_direction: ViewDirection
 
 var change_view_timer: Timer
 var move_direction: float
-var view_direction: int
+# var view_direction: ViewDirection
 var player_in_vision: bool
 var player_in_attack_range: bool
 var is_attacking: bool
 var state: State
 enum State {Idle, Walk, Attack, Chase}
+enum ViewDirection {Left, Right}
 
 func _ready() -> void:
 	change_view_timer = Timer.new()
@@ -27,8 +29,8 @@ func _ready() -> void:
 	
 	state = State.Idle
 	move_direction = 0
-	view_direction = 1
-	view_collision.position.x = view_collision.shape.size.x / 2
+	_set_view_direction(view_direction)
+	# view_collision.position.x = view_collision.shape.size.x / 2
 	player_in_vision = false
 	player_in_attack_range = false
 	is_attacking = false
@@ -38,6 +40,15 @@ func _ready() -> void:
 	var frames = anim.sprite_frames.get_frame_count("idle")
 	anim.frame = randi() % frames
 	#anim.animation_finished.connect(_on_attack_animation_finished)
+
+func _update_attack_collision_position() -> void:
+	match view_direction:
+		ViewDirection.Right: 
+			attack_collision.position.x = 8.5
+			attack_collision.position.y = 4
+		ViewDirection.Left:
+			attack_collision.position.x = -8.5
+			attack_collision.position.y = 4			
 
 func _play_animation(animation: String) -> void:
 	if anim.animation == animation:
@@ -61,7 +72,7 @@ func state_physics_process(delta: float) -> void:
 			velocity.x = move_direction * speed_chase
 		State.Attack, State.Idle:
 			velocity.x = 0
-	if velocity.x < 0 || view_direction == -1:
+	if velocity.x < 0 || view_direction == ViewDirection.Left:
 		anim.flip_h = true
 	else:
 		anim.flip_h = false
@@ -78,11 +89,21 @@ func state_update() -> void:
 		state = State.Idle
 		
 
-func update_view_collision_position() -> void:
-	if view_direction == 1:
-		view_collision.position.x = view_collision.shape.size.x / 2
-	else:
-		view_collision.position.x = -view_collision.shape.size.x / 2
+func _update_hit_box_collision_position() -> void:
+	match (view_direction):
+		ViewDirection.Right:
+			hit_box_collision.position.x = 8.5
+			hit_box_collision.position.y = 5
+		ViewDirection.Left:
+			hit_box_collision.position.x = -8.0
+			hit_box_collision.position.y = 5
+
+func _update_view_collision_position() -> void:
+	match view_direction:
+		ViewDirection.Right:
+			view_collision.position.x = view_collision.shape.size.x / 2
+		ViewDirection.Left:
+			view_collision.position.x = -view_collision.shape.size.x / 2
 
 func _physics_process(delta: float) -> void:
 	state_physics_process(delta)
@@ -108,11 +129,17 @@ func _on_view_body_exited(body: Node2D) -> void:
 		state_update()
 
 
+func _set_view_direction(direction: ViewDirection) -> void:
+	view_direction = direction
+	_update_attack_collision_position()
+	_update_view_collision_position()
+	_update_hit_box_collision_position()
+
 func _on_change_view_timer_timeout() -> void:
 	if player_in_vision == false:
-		view_direction = -1 * view_direction
-		update_view_collision_position()
-
+		match view_direction:
+			ViewDirection.Left: _set_view_direction(ViewDirection.Right)
+			ViewDirection.Right: _set_view_direction(ViewDirection.Left)
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -144,6 +171,8 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if not anim: return
 	if anim.animation == "attack":
 		if anim.frame == 7:
+			#print("hit_box active")
 			hit_box.set_active(true)
 		elif anim.frame == 8:
+			#print("hit_box inactive")
 			hit_box.set_active(false)
