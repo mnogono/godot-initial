@@ -44,7 +44,6 @@ id = 1
 [node name="Door2" parent="Doors" instance=ExtResource("3_jv26f")]
 position = Vector2(296, -16)
 id = 2
-is_lock = false
 
 [node name="Door3" parent="Doors" instance=ExtResource("3_jv26f")]
 position = Vector2(200, 97)

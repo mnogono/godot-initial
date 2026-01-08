@@ -104,7 +104,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	#if event.is_action_pressed("interact"):
 		#print("nearble_interactive size: " + str(nearbly_interactive.size()))
 	if event.is_action_pressed("interact") and nearbly_interactive.is_empty() == false:
 		#print("interact with...")
